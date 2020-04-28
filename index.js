@@ -1,6 +1,6 @@
 var inquirer = require("inquirer"); //use this to ask questions
 var fs = require("fs"); // use this to write the md file
-var dotenv = require("dotenv").config(); //it was in the json package, and this is what the docs said to do, 
+// var dotenv = require("dotenv").config(); //it was in the json package, and this is what the docs said to do, 
 //makes environment variables from an .env file. 
 var markdown = require("./utils/generateMarkdown.js"); //include markdown function from other file
 // var readme = require("template.md");
@@ -74,7 +74,7 @@ inquirer
 .prompt(questions).then(answers => {
 
     var filename = answers.title.toLowerCase().split(" ").join("")+".md"; //this creates a new file with the name from userinput 
-    fs.writeFile(filename, JSON.stringify(answers, null, '\t'), function(err) {
+    fs.writeFile(filename, JSON.stringify(answers, null), function(err) { //referenced activity 15, unsure on '\t' functionality, trying to do further research
          if (err) {
              console.log("ERROR");
          } 

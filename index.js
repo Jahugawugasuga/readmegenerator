@@ -1,10 +1,7 @@
 var inquirer = require("inquirer"); //use this to ask questions
 var fs = require("fs"); // use this to write the md file
-// var dotenv = require("dotenv").config(); //it was in the json package, and this is what the docs said to do, 
-//makes environment variables from an .env file. 
 var markdown = require("./utils/generateMarkdown.js"); //include markdown function from other file
-// var readme = require("template.md");
-
+var axios = require("axios");
 const questions = [
     {
         type: "input",
@@ -54,7 +51,8 @@ const questions = [
             "MIT",
             "Apache",
             "Mozilla Public License",
-            "The Unlicense"
+            "The Unlicense",
+            "none"
 
         ]
     },
@@ -69,43 +67,35 @@ const questions = [
 ]
  
 
-inquirer 
+function writeToFile(filename, answers) {
+    markdown(answers);
+    return fs.writeFileSync(filename, answers)  
+    
+};
+function githubImg(username) {
+var userURL= "https://api.github.com/users/" + username
+   return axios.get(userURL).then(function(response) {
+    return response.avatar_url
+    })
+}
+function init() {
 
-.prompt(questions).then(answers => {
+    inquirer 
 
-    var filename = answers.title.toLowerCase().split(" ").join("")+".md"; //this creates a new file with the name from userinput 
-    fs.writeFile(filename, JSON.stringify(answers, null), function(err) { //referenced activity 15, unsure on '\t' functionality, trying to do further research
-         if (err) {
-             console.log("ERROR");
-         } 
-             console.log("SUCCESS");
-             if (answers.name !==null) {
-                 console.log(answers.name);
-             } else {
-                 console.log(error)
-             }
-            // var userProfile = "https://github.com/"+answers.username 
+    .prompt(questions).then(answers => {
+    
+        var filename = answers.title.toLowerCase().split(" ").join("")+".md"; //this creates a new file with the name from userinput 
+       
+        writeToFile(filename, answers); //this works
+        githubImg(answers.username);
+        console.log(answers);
+        console.log(typeof answers);
     });
-    // .catch(error => {
-    //     if (error.isTtyError) {
+   
+}
 
-    //     } else {
+init();
 
-    //     }
-    // }
-});
-
-
-
-
-// function writeToFile(fileName, data) {
-// }
-
-// function init() {
-
-// }
-
-// init();
 
 //we don't need the internet at all
 ////grab all inquirer stuff

@@ -66,17 +66,17 @@ const questions = [
 
 ]
  
-
 function writeToFile(filename, answers) {
     markdown(answers);
-    return fs.writeFileSync(filename, answers)  
+    return fs.writeFileSync(filename, answers)  //this is working
     
 };
 function githubImg(username) {
 var userURL= "https://api.github.com/users/" + username
    return axios.get(userURL).then(function(response) {
-    return response.avatar_url
-    })
+    return response.data.avatar_url
+    
+    });
 }
 function init() {
 
@@ -87,16 +87,16 @@ function init() {
         var filename = answers.title.toLowerCase().split(" ").join("")+".md"; //this creates a new file with the name from userinput 
        
         writeToFile(filename, answers); //this works
-        githubImg(answers.username);
-        console.log(answers);
-        console.log(typeof answers);
+        // githubImg(answers.username); //this works
+       
     });
    
 }
 
 init();
 
-
+console.log(githubImg());
+console.log(githubImg);
 //we don't need the internet at all
 ////grab all inquirer stuff
 // 2. runs generate markdown on all answers and questions

@@ -1,6 +1,6 @@
 var inquirer = require("inquirer"); //use this to ask questions
 var fs = require("fs"); // use this to write the md file
-var markdown = require("./utils/generateMarkdown.js"); //include markdown function from other file
+var markdown = require("./utils/generateMarkdown"); //include markdown function from other file
 var axios = require("axios");
 const questions = [
     {
@@ -44,14 +44,14 @@ const questions = [
         name: "tests"
     },
     {
-        type:"checkbox",
+        type:"list",
         message: "Any licensing, MIT, Apache, etc.?",
         name: "licenses",
         choices: [
             "MIT",
-            "Apache",
+            "Apache 2.0",
             "Mozilla Public License",
-            "The Unlicense",
+            "ISC",
             "none"
 
         ]
@@ -67,27 +67,28 @@ const questions = [
 ]
  
 function writeToFile(filename, answers) {
-    markdown(answers);
+    
     return fs.writeFileSync(filename, answers)  //this is working
     
 };
-function githubImg(username) {
-var userURL= "https://api.github.com/users/" + username
-   return axios.get(userURL).then(function(response) {
-    return response.data.avatar_url
+    function githubImg(username) {
     
-    });
-}
+        return axios.get("https://api.github.com/users/" + username)
+    
+    };
+
 function init() {
 
     inquirer 
 
     .prompt(questions).then(answers => {
     
-        var filename = answers.title.toLowerCase().split(" ").join("")+".md"; //this creates a new file with the name from userinput 
+        var filename = answers.title.toLowerCase().split(" ").join("")+".md"; 
        
-        writeToFile(filename, answers); //this works
-        // githubImg(answers.username); //this works
+        githubImg(answers.username).then(data => {
+            writeToFile(filename, markdown(answers, data.data));
+            
+        });
        
     });
    
@@ -95,25 +96,5 @@ function init() {
 
 init();
 
-console.log(githubImg());
-console.log(githubImg);
-//we don't need the internet at all
-////grab all inquirer stuff
-// 2. runs generate markdown on all answers and questions
-//3. write it to file 
 
-//generate md function - 
-
-//badge is the license - need a function - licensing
-
-//how to grab a license - what does it take to add an mit license
-//on a readme
-
-//just give a few options 
-
-//in markdown you can generate a badge 
-
-// table of contents is a list of everything selected
-// look how to generate a table of contents
-// create a md file and create the way i would want it to look like
 

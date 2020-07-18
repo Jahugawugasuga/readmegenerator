@@ -1,6 +1,6 @@
-var inquirer = require("inquirer"); //use this to ask questions
-var fs = require("fs"); // use this to write the md file
-var markdown = require("./utils/generateMarkdown"); //include markdown function from other file
+var inquirer = require("inquirer"); 
+var fs = require("fs"); 
+var markdown = require("./utils/generateMarkdown"); 
 var axios = require("axios");
 const questions = [
     {
@@ -68,7 +68,7 @@ const questions = [
  
 function writeToFile(filename, answers) {
     
-    return fs.writeFileSync(filename, answers)  //this is working
+    return fs.writeFileSync(filename, answers)  
     
 };
     function githubImg(username) {
@@ -85,8 +85,8 @@ function init() {
     
         var filename = answers.title.toLowerCase().split(" ").join("")+".md"; 
        
-        githubImg(answers.username).then(data => {
-            writeToFile(filename, markdown(answers, data.data));
+        githubImg(answers.username).then(response => {
+            writeToFile(filename, markdown(answers, response.data));
             
         });
        

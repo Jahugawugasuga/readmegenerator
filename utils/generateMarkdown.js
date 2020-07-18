@@ -1,7 +1,7 @@
-function generateMarkdown(answers,data) {
+function generateMarkdown(answers,response) {
   return `
-![github avatar](${data.avatar_url})\n
-![github badge](https://img.shields.io/badge/License-${data.license}-red)
+![github avatar](${response.avatar_url})\n
+![github badge](https://img.shields.io/badge/License-${response.license}-red)
  ## Application
  ${answers.title} 
 ### Project Description
@@ -14,7 +14,7 @@ ${answers.usage}
 ${answers.technology}
 ### Licenses
 ${answers.licenses}
-###
+### Project Contributers
 ${answers.contributers}
 ### Testing
 ${answers.tests}

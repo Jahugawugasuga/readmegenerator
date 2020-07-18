@@ -1,7 +1,5 @@
-<<<<<<< HEAD
-=======
+
 # readmegenerator
->>>>>>> 711bb938bbedf7be056ec77000aa99c1c65fae24
 
 ![github avatar](https://avatars1.githubusercontent.com/u/60955280?v=4)
 
